@@ -91,37 +91,21 @@ bool stdingetline(Buffer* buffer)
 
 bool contains(char* str, char* search_for_me)
 {
-    /*
-    char* split = strdup(str);
-    char* word = strtok(split, " \n\t");
+    ssize_t desired_str_len = strlen(search_for_me);
+    ssize_t searched_str_len = strlen(str);
 
-    while (word != NULL)
-    {
-        if (strcmp(word, search_for_me) == 0)
-        {
-            free(split);
-            return true;
-        }
-
-        word = strtok(NULL, " \n\t");
-    }
-
-    free(split);
-    return false;
-    */
-    if(strlen(search_for_me) > strlen(str)) return false;
+    if(desired_str_len > searched_str_len) return false;
 
     char* begin = str;
-    char* end = str + strlen(search_for_me);
+    char* end = str + desired_str_len;
 
-    while (end != str + strlen(str))
+    while (end != str + searched_str_len)
     {
         char* new_str = malloc(strlen(search_for_me));
         memcpy(new_str, begin, end - begin);
 
-        //printf("%s\n", new_str);
 
-        if (strncmp(new_str, search_for_me, strlen(search_for_me)) == 0)
+        if (strncmp(new_str, search_for_me, desired_str_len) == 0)
         {
             free(new_str);
             return true;
